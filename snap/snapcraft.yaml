@@ -1,0 +1,121 @@
+name: ardour
+summary: Ardour DAW
+description: Best DAW ever
+version: "5.9.0"
+grade: stable
+confinement: devmode
+
+apps:
+  ardour:
+    # command: desktop-launch $SNAP/usr/bin/ardour5
+    command: bin/start-ardour.sh
+    plugs: [home, x11, unity7, gsettings, pulseaudio]
+
+parts:
+  common:
+    plugin: waf
+    source: .
+    configflags:
+      - --lv2
+      - --lxvst
+      - --freedesktop
+      - --configdir=/etc/
+      - --noconfirm
+      - --prefix=/usr/
+      - --no-phone-home
+      - --use-external-libs
+      - --optimize
+      - --cxx11
+      - --with-backends=jack,alsa,dummy
+      - --dist-target=x86_64
+    build-packages:
+      - autotools-dev
+      - licensecheck
+      - gettext
+      - intltool
+      - itstool
+      - libarchive-dev
+      - libboost-dev
+      - libcurl4-gnutls-dev
+      - libfftw3-dev
+      - liblrdf0-dev
+      - libserd-dev
+      - libsord-dev
+      - libsuil-dev
+      - liblilv-dev
+      - libsratom-dev
+      - libsigc++-2.0-dev
+      - uuid-dev
+      - libxml2-dev
+      - libcwiid-dev
+      - libcairomm-1.0-dev
+      - libgtkmm-2.4-dev
+      - libpangomm-1.4-dev
+      - libhidapi-dev
+      - libusb-1.0-0-dev
+      - ladspa-sdk
+      - libasound2-dev
+      - libaubio-dev
+      - libfluidsynth-dev
+      - libjack-dev
+      - liblo-dev
+      - libltc-dev
+      - libqm-dsp-dev
+      - librubberband-dev
+      - libsamplerate0-dev
+      - libsndfile1-dev
+      - libtag1-dev
+      - lv2-dev
+      - vamp-plugin-sdk
+      - python-setuptools
+      - python-isodate
+      - python-rdflib
+    after: [desktop-gtk2]
+    stage-packages:
+      - jackd
+      - libfftw3-3
+      - libasound2
+      - libatkmm-1.6-1v5
+      - libaubio5
+      - libc6
+      - libcairo2
+      - libcairomm-1.0-1v5
+      - libcppunit-1.13-0v5
+      - libcurl3-gnutls
+      - libdbus-1-3
+      - libfftw3-single3
+      - libfontconfig1
+      - libgcc1
+      - libgdk-pixbuf2.0-0
+      - libglib2.0-0
+      - libglibmm-2.4-1v5
+      - libgtk2.0-0
+      - libgtkmm-2.4-1v5
+      - libjack-jackd2-0
+      - liblilv-0-0
+      - liblo7
+      - liblrdf0
+      - libltc11
+      - libpango-1.0-0
+      - libpangocairo-1.0-0
+      - libpangoft2-1.0-0
+      - libpangomm-1.4-1v5
+      - librubberband2v5
+      - libsamplerate0
+      - libsigc++-2.0-0v5
+      - libsndfile1
+      - libstdc++6
+      - libsuil-0-0
+      - libtag1v5
+      - libvamp-hostsdk3v5
+      - libvamp-sdk2v5
+      - libx11-6
+      - libxml2
+
+  # Library that adds $SNAP prefix to paths in calls to glibc
+  snappypreload:
+    plugin: cmake
+    source: src
+    build-packages:
+        - build-essential
+
