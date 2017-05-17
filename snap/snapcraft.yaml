@@ -14,7 +14,9 @@ apps:
 parts:
   common:
     plugin: waf
-    source: .
+    source: git://github.com/Ardour/ardour.git
+    source-type: "git"
+    source-tag: "5.9"
     configflags:
       - --lv2
       - --lxvst
@@ -70,6 +72,7 @@ parts:
       - python-setuptools
       - python-isodate
       - python-rdflib
+      - libcppunit-dev
     after: [desktop-gtk2]
     stage-packages:
       - jackd
@@ -119,3 +122,9 @@ parts:
     build-packages:
         - build-essential
 
+  # Overlay files
+  overlay:
+    plugin: dump
+    source: overlay
+
+icon: snap/gui/ardour.svg
